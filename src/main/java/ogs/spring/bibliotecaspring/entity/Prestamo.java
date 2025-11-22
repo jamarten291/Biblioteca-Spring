@@ -17,6 +17,7 @@ public class Prestamo {
     private LocalDate fechaDevolucion;
     private Integer diasRetraso;
     private EstadoPrestamo estado;
+    // TODO relacionar entidad con Libro y Socio
 
     public boolean estaAtrasado() {
         return fechaDevolucion.isAfter(fechaLimite);
