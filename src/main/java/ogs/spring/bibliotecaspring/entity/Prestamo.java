@@ -1,9 +1,7 @@
 package ogs.spring.bibliotecaspring.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import ogs.spring.bibliotecaspring.entity.enums.EstadoPrestamo;
 
 import java.time.LocalDate;
 
@@ -11,7 +9,14 @@ import java.time.LocalDate;
 public class Prestamo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long prestamoId;
+    // Relaciones
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "libroId")
+    private Libro libro;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "socioId")
+    private Socio socio;
     private LocalDate fechaPrestamo;
     private LocalDate fechaLimite;
     private LocalDate fechaDevolucion;
@@ -26,8 +31,8 @@ public class Prestamo {
     public Prestamo() {
     }
 
-    public Long getId() {
-        return id;
+    public Long getPrestamoId() {
+        return prestamoId;
     }
 
     public LocalDate getFechaPrestamo() {
@@ -68,5 +73,21 @@ public class Prestamo {
 
     public void setEstado(EstadoPrestamo estado) {
         this.estado = estado;
+    }
+
+    public Libro getLibro() {
+        return libro;
+    }
+
+    public void setLibro(Libro libro) {
+        this.libro = libro;
+    }
+
+    public Socio getSocio() {
+        return socio;
+    }
+
+    public void setSocio(Socio socio) {
+        this.socio = socio;
     }
 }

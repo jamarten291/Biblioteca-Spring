@@ -13,7 +13,19 @@ class PrestamoService {
         this.prestamoRepository = prestamoRepository;
     }
 
+    public Prestamo crearPrestamo(Long socioId, Long libroId) {
+        return new Prestamo();
+    }
+
     public Prestamo devolverPrestamo(Long id) {
         return prestamoRepository.findById(id).orElse(null);
+    }
+
+    public void comprobarReglasPrestamo(Prestamo prestamo) {
+
+    }
+
+    public void calcularFechasYPenalizaciones(Prestamo prestamo) {
+
     }
 }

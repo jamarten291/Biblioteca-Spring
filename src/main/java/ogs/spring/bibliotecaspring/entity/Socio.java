@@ -1,17 +1,17 @@
 package ogs.spring.bibliotecaspring.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
+import ogs.spring.bibliotecaspring.entity.enums.EstadoSocio;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 public class Socio {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long socioId;
     private String nombre;
     private String apellidos;
     private String email;
@@ -19,12 +19,15 @@ public class Socio {
     private LocalDate fechaAlta;
     private EstadoSocio estado;
     private LocalDate fechaFinPenalizacion;
+    @OneToMany(mappedBy = "socio", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JsonIgnore
+    private List<Prestamo> prestamos;
 
     public Socio() {
     }
 
-    public Long getId() {
-        return id;
+    public Long getSocioId() {
+        return socioId;
     }
 
     public String getNombre() {
@@ -83,10 +86,18 @@ public class Socio {
         this.fechaFinPenalizacion = fechaFinPenalizacion;
     }
 
+    public List<Prestamo> getPrestamos() {
+        return prestamos;
+    }
+
+    public void setPrestamos(List<Prestamo> prestamos) {
+        this.prestamos = prestamos;
+    }
+
     @Override
     public String toString() {
         return "Socio{" +
-                "id=" + id +
+                "id=" + socioId +
                 ", nombre='" + nombre + '\'' +
                 ", apellidos='" + apellidos + '\'' +
                 ", email='" + email + '\'' +

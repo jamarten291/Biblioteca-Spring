@@ -1,8 +1,8 @@
 package ogs.spring.bibliotecaspring.repository;
 
-import ogs.spring.bibliotecaspring.entity.EstadoPrestamo;
 import ogs.spring.bibliotecaspring.entity.Prestamo;
 import ogs.spring.bibliotecaspring.entity.Socio;
+import ogs.spring.bibliotecaspring.entity.enums.EstadoPrestamo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -10,4 +10,6 @@ import java.util.List;
 
 @Repository
 public interface PrestamoRepository extends JpaRepository<Prestamo, Long> {
+    List<Prestamo> findBySocioAndEstado(Socio socio, EstadoPrestamo estado);
+    List<Prestamo> findAtrasados();
 }

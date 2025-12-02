@@ -1,26 +1,29 @@
 package ogs.spring.bibliotecaspring.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 public class Libro {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long libroId;
     private String titulo;
     private String autor;
     private Integer yearPublicacion;
     private String categoria;
     private String isbn;
+    @OneToMany(mappedBy = "libro", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JsonIgnore
+    private List<Prestamo> prestamos;
 
     public Libro() {
     }
 
-    public Long getId() {
-        return id;
+    public Long getLibroId() {
+        return libroId;
     }
 
     public String getTitulo() {
@@ -63,10 +66,18 @@ public class Libro {
         this.isbn = isbn;
     }
 
+    public List<Prestamo> getPrestamos() {
+        return prestamos;
+    }
+
+    public void setPrestamos(List<Prestamo> prestamos) {
+        this.prestamos = prestamos;
+    }
+
     @Override
     public String toString() {
         return "Libro{" +
-                "id=" + id +
+                "id=" + libroId +
                 ", titulo='" + titulo + '\'' +
                 ", autor='" + autor + '\'' +
                 ", yearPublicacion=" + yearPublicacion +
