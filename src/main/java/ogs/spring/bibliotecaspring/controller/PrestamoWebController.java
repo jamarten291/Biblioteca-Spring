@@ -7,10 +7,7 @@ import ogs.spring.bibliotecaspring.repository.PrestamoRepository;
 import ogs.spring.bibliotecaspring.repository.SocioRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/prestamos")
@@ -49,21 +46,25 @@ public class PrestamoWebController {
     @GetMapping("/listar")
     public String listadoPrestamo(Model model) {
         model.addAttribute("prestamos", prestamoRepository.findAll());
-        model.addAttribute("socios", socioRepository.findAll());
-        model.addAttribute("libros", libroRepository.findAll());
         return "listado-prestamo";
     }
 
     @PostMapping()
-    public String crearPrestamo(@Valid Prestamo prestamo, Model model) {
+    public String crearPrestamo(@Valid Prestamo prestamo) {
         // Guarda el préstamo recibido por el modelo
         prestamoRepository.save(prestamo);
-        return "redirect:/menu";
+        return "redirect:/prestamos/listar";
     }
 
-    @DeleteMapping
-    public String borrarPrestamo(@Valid Prestamo prestamo, Model model) {
-        prestamoRepository.delete(prestamo);
-        return "redirect:/menu";
+    @DeleteMapping()
+    public String borrarPrestamoByParam(@RequestParam("prestamoId") Long id) {
+        prestamoRepository.deleteById(id);
+        return "redirect:/prestamos/listar";
+    }
+
+    @DeleteMapping("/{id}")
+    public String borrarPrestamoByPath(@PathVariable("prestamoId") Long id) {
+        prestamoRepository.deleteById(id);
+        return "redirect:/prestamos/listar";
     }
 }

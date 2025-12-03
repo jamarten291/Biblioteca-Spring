@@ -21,7 +21,6 @@
     <table class="table table-hover table-striped">
         <thead class="table-dark">
         <tr>
-            <th>#</th>
             <th>ID</th>
             <th>Libro</th>
             <th>Socio</th>
@@ -35,22 +34,21 @@
         </thead>
         <tbody>
         <!-- Recorremos la lista de préstamos enviada desde el controlador -->
-        <tr th:each="prestamo, iterStat : ${prestamos}">
-            <td th:text="${iterStat.count}">1</td>
-            <td th:text="${prestamo.prestamoId}">10</td>
+        <tr th:each="prestamo : ${prestamos}">
+            <td th:text="${prestamo.prestamoId}"></td>
 
             <!-- Libro (nombre o título) -->
-            <td th:text="${prestamo.libro.titulo}">Título del libro</td>
+            <td th:text="${prestamo.libro.titulo}"></td>
 
             <!-- Socio (nombre) -->
-            <td th:text="${prestamo.socio.nombre}">Nombre del socio</td>
+            <td th:text="${prestamo.socio.nombre}"></td>
 
-            <td th:text="${prestamo.fechaPrestamo}">2024-01-01</td>
-            <td th:text="${prestamo.fechaLimite}">2024-01-15</td>
-            <td th:text="${prestamo.fechaDevolucion} ?: '-'">-</td>
+            <td th:text="${prestamo.fechaPrestamo}"></td>
+            <td th:text="${prestamo.fechaLimite}"></td>
+            <td th:text="${prestamo.fechaDevolucion} ?: '-'"></td>
 
-            <td th:text="${prestamo.diasRetraso} ?: 0">0</td>
-            <td th:text="${prestamo.estado}">ACTIVO</td>
+            <td th:text="${prestamo.diasRetraso} ?: 0"></td>
+            <td th:text="${prestamo.estado}"></td>
 
             <!-- Acciones (ver detalle, editar, dar de baja) -->
             <td>
@@ -58,7 +56,7 @@
                    class="btn btn-sm btn-outline-primary me-1">Ver</a>
                 <a th:href="@{/prestamos/editar/{id}(id=${prestamo.prestamoId})}"
                    class="btn btn-sm btn-outline-warning me-1">Editar</a>
-                <form th:action="@{/prestamos/baja}"
+                <form th:action="@{/prestamos/{id}(id=${prestamo.prestamoId})}"
                       method="post"
                       th:object="${prestamo}"
                       class="d-inline">

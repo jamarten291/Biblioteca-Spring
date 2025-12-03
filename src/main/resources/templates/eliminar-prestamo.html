@@ -13,14 +13,14 @@
 <div class="container py-5">
     <h1 class="mb-4">Baja de Préstamo</h1>
 
-    <form th:action="@{/prestamos}" method="post" class="row g-3">
+    <form th:action="@{/prestamos/{}}" method="post" class="row g-3">
         <!-- Campo oculto que indica el verbo real -->
         <input type="hidden" name="_method" value="delete"/>
 
         <!-- ID del préstamo -->
         <div class="col-md-6">
-            <label for="libroId" class="form-label">Libro</label>
-            <select id="libroId"
+            <label for="prestamoId" class="form-label">Listado de préstamos disponibles</label>
+            <select id="prestamoId"
                     th:field="*{prestamos}"
                     class="form-select"
                     required>

@@ -11,7 +11,7 @@ import java.util.List;
 
 @Repository
 public interface PrestamoRepository extends JpaRepository<Prestamo, Long> {
-    List<Prestamo> findBySocioAndEstado(Socio socio, EstadoPrestamo estado);
+    List<Prestamo> findBySocioAndEstado(Socio socio, Prestamo.EstadoPrestamo estado);
     @Query("SELECT p FROM Prestamo p WHERE p.estado = 'ATRASADO'")
     List<Prestamo> findAtrasados();
 }
