@@ -1,4 +1,4 @@
-package ogs.spring.bibliotecaspring.entity.enums;
+package ogs.spring.bibliotecaspring.entity;
 
 public enum EstadoSocio {
     ACTIVO,

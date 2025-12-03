@@ -23,7 +23,9 @@
         <!-- Opción 1 -->
         <li class="list-group-item d-flex justify-content-between align-items-start">
             <div class="ms-2 me-auto">
-                <div class="fw-bold">Pedir un libro prestado</div>
+                <div class="fw-bold">
+                    <a th:href="@{/prestamos/nuevo}" class="text-decoration-none">Pedir un libro prestado</a>
+                </div>
                 Aquí podrás pedir prestado un libro de nuestra biblioteca.
             </div>
         </li>
@@ -31,7 +33,9 @@
         <!-- Opción 2 -->
         <li class="list-group-item d-flex justify-content-between align-items-start">
             <div class="ms-2 me-auto">
-                <div class="fw-bold">Devolver libro</div>
+                <div class="fw-bold">
+                    <a th:href="@{/prestamos/eliminar}" class="text-decoration-none">Devolver libro</a>
+                </div>
                 Devuelve el libro de nuestra biblioteca que pediste prestado.
             </div>
         </li>
@@ -39,7 +43,9 @@
         <!-- Opción 3 -->
         <li class="list-group-item d-flex justify-content-between align-items-start">
             <div class="ms-2 me-auto">
-                <div class="fw-bold">Listado de préstamos</div>
+                <div class="fw-bold">
+                    <a th:href="@{/prestamos/listar}" class="text-decoration-none">Listado de préstamos</a>
+                </div>
                 Ve un listado de tus préstamos realizados en nuestra biblioteca.
             </div>
         </li>

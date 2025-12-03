@@ -2,7 +2,6 @@ package ogs.spring.bibliotecaspring.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import ogs.spring.bibliotecaspring.entity.enums.EstadoSocio;
 
 import java.time.LocalDate;
 import java.util.List;

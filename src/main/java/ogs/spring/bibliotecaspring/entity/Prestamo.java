@@ -1,12 +1,17 @@
 package ogs.spring.bibliotecaspring.entity;
 
 import jakarta.persistence.*;
-import ogs.spring.bibliotecaspring.entity.enums.EstadoPrestamo;
 
 import java.time.LocalDate;
 
 @Entity
 public class Prestamo {
+    public enum EstadoPrestamo {
+        ACTIVO,
+        ATRASADO,
+        DEVUELTO,
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long prestamoId;

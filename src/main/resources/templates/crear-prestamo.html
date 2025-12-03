@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Nuevo Préstamo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          crossorigin="anonymous">
+</head>
+<body class="bg-light">
+
+<div class="container py-4">
+    <h1 class="mb-4">Crear Préstamo</h1>
+
+    <!-- Formulario de préstamo -->
+    <form th:action="@{/prestamo}" th:object="${prestamo}" method="post" class="row g-3">
+
+        <!-- Socio (combobox) -->
+        <div class="col-md-6">
+            <label for="socioId" class="form-label">Socio</label>
+            <select id="socioId"
+                    th:field="*{socio}"
+                    class="form-select"
+                    required>
+                <option th:each="socio : ${socios}"
+                        th:value="${socio}"
+                        th:text="${socio.nombre} + ' (' + socio.id + ')'">
+                </option>
+            </select>
+        </div>
+
+        <!-- Libro (combobox) -->
+        <div class="col-md-6">
+            <label for="libroId" class="form-label">Libro</label>
+            <select id="libroId"
+                    th:field="*{libro}"
+                    class="form-select"
+                    required>
+                <option th:each="libro : ${libros}"
+                        th:value="${libro}"
+                        th:text="${libro.titulo} + ' - ' + libro.isbn">
+                </option>
+            </select>
+        </div>
+
+        <!-- Fecha de préstamo -->
+        <div class="col-md-4">
+            <label for="fechaPrestamo" class="form-label">Fecha de Préstamo</label>
+            <input type="date"
+                   id="fechaPrestamo"
+                   th:field="*{fechaPrestamo}"
+                   class="form-control"
+                   required>
+        </div>
+
+        <!-- Fecha límite -->
+        <div class="col-md-4">
+            <label for="fechaLimite" class="form-label">Fecha Límite</label>
+            <input type="date"
+                   id="fechaLimite"
+                   th:field="*{fechaLimite}"
+                   class="form-control"
+                   required>
+        </div>
+
+        <!-- Fecha devolución (opcional) -->
+        <div class="col-md-4">
+            <label for="fechaDevolucion" class="form-label">Fecha Devolución</label>
+            <input type="date"
+                   id="fechaDevolucion"
+                   th:field="*{fechaDevolucion}"
+                   class="form-control">
+        </div>
+
+        <!-- Días de retraso (solo lectura, se calcula) -->
+        <div class="col-12">
+            <label for="diasRetraso" class="form-label">Días de Retraso</label>
+            <input type="number"
+                   id="diasRetraso"
+                   th:field="*{diasRetraso}"
+                   class="form-control"
+                   placeholder="Se calculará al guardar"
+                   readonly>
+        </div>
+
+        <!-- Estado (combobox) -->
+        <div class="col-12">
+            <label for="estado" class="form-label">Estado del Préstamo</label>
+            <select id="estado"
+                    th:field="*{estado}"
+                    class="form-select"
+                    required>
+                <option th:each="e : ${T(ogs.spring.bibliotecaspring.entity.EstadoPrestamo).values()}"
+                        th:value="${e}"
+                        th:text="${e}">
+                </option>
+            </select>
+        </div>
+
+        <!-- Botones -->
+        <div class="col-12 d-flex justify-content-between mt-3">
+            <a th:href="@{/prestamos/menu}" class="btn btn-secondary">Cancelar</a>
+            <button type="submit" class="btn btn-primary">Guardar Préstamo</button>
+        </div>
+    </form>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        crossorigin="anonymous"></script>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Dar de Baja un Préstamo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          crossorigin="anonymous">
+</head>
+<body class="bg-light">
+
+<div class="container py-5">
+    <h1 class="mb-4">Baja de Préstamo</h1>
+
+    <form th:action="@{/prestamos}" method="post" class="row g-3">
+        <!-- Campo oculto que indica el verbo real -->
+        <input type="hidden" name="_method" value="delete"/>
+
+        <!-- ID del préstamo -->
+        <div class="col-md-6">
+            <label for="prestamoId" class="form-label">ID del Préstamo</label>
+            <input type="number"
+                   id="prestamoId"
+                   name="prestamoId"
+                   class="form-control"
+                   placeholder="Introduce el ID"
+                   required>
+        </div>
+
+        <!-- Botones -->
+        <div class="col-12 d-flex justify-content-between mt-3">
+            <a th:href="@{/prestamos/menu}" class="btn btn-secondary">Cancelar</a>
+            <button type="submit" class="btn btn-danger">Dar de Baja</button>
+        </div>
+    </form>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        crossorigin="anonymous"></script>
+</body>
+</html>
