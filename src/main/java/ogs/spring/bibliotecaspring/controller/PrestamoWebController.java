@@ -61,10 +61,4 @@ public class PrestamoWebController {
         prestamoRepository.deleteById(id);
         return "redirect:/prestamos/listar";
     }
-
-    @DeleteMapping("/{id}")
-    public String borrarPrestamoByPath(@PathVariable("prestamoId") Long id) {
-        prestamoRepository.deleteById(id);
-        return "redirect:/prestamos/listar";
-    }
 }

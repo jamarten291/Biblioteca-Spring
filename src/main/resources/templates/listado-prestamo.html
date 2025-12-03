@@ -29,7 +29,6 @@
             <th>Fecha Devolución</th>
             <th>Días Retraso</th>
             <th>Estado</th>
-            <th>Acciones</th>
         </tr>
         </thead>
         <tbody>
@@ -49,28 +48,6 @@
 
             <td th:text="${prestamo.diasRetraso} ?: 0"></td>
             <td th:text="${prestamo.estado}"></td>
-
-            <!-- Acciones (ver detalle, editar, dar de baja) -->
-            <td>
-                <a th:href="@{/prestamos/{id}(id=${prestamo.prestamoId})}"
-                   class="btn btn-sm btn-outline-primary me-1">Ver</a>
-                <a th:href="@{/prestamos/editar/{id}(id=${prestamo.prestamoId})}"
-                   class="btn btn-sm btn-outline-warning me-1">Editar</a>
-                <form th:action="@{/prestamos/{id}(id=${prestamo.prestamoId})}"
-                      method="post"
-                      th:object="${prestamo}"
-                      class="d-inline">
-                    <!-- hidden _method to trigger DELETE -->
-                    <input type="hidden" name="_method" value="delete"/>
-                    <input type="hidden" th:name="prestamoId"
-                           th:value="${prestamo.prestamoId}"/>
-                    <button type="submit"
-                            class="btn btn-sm btn-outline-danger"
-                            onclick="return confirm('¿Seguro que deseas dar de baja este préstamo?');">
-                        Baja
-                    </button>
-                </form>
-            </td>
         </tr>
 
         <!-- Mensaje cuando no hay préstamos -->
