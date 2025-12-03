@@ -35,6 +35,8 @@ public class Prestamo {
     }
 
     public Prestamo() {
+        this.fechaPrestamo = LocalDate.now();
+        this.estado = EstadoPrestamo.ACTIVO;
     }
 
     public Long getPrestamoId() {

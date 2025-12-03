@@ -19,13 +19,16 @@
 
         <!-- ID del préstamo -->
         <div class="col-md-6">
-            <label for="prestamoId" class="form-label">ID del Préstamo</label>
-            <input type="number"
-                   id="prestamoId"
-                   name="prestamoId"
-                   class="form-control"
-                   placeholder="Introduce el ID"
-                   required>
+            <label for="libroId" class="form-label">Libro</label>
+            <select id="libroId"
+                    th:field="*{prestamos}"
+                    class="form-select"
+                    required>
+                <option th:each="prestamo : ${prestamos}"
+                        th:value="${prestamo}"
+                        th:text="'Id - ' + ${prestamo.getPrestamoId()}">
+                </option>
+            </select>
         </div>
 
         <!-- Botones -->

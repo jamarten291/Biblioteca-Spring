@@ -44,16 +44,6 @@
             </select>
         </div>
 
-        <!-- Fecha de préstamo -->
-        <div class="col-md-4">
-            <label for="fechaPrestamo" class="form-label">Fecha de Préstamo</label>
-            <input type="date"
-                   id="fechaPrestamo"
-                   th:field="*{fechaPrestamo}"
-                   class="form-control"
-                   required>
-        </div>
-
         <!-- Fecha límite -->
         <div class="col-md-4">
             <label for="fechaLimite" class="form-label">Fecha Límite</label>
@@ -62,40 +52,6 @@
                    th:field="*{fechaLimite}"
                    class="form-control"
                    required>
-        </div>
-
-        <!-- Fecha devolución (opcional) -->
-        <div class="col-md-4">
-            <label for="fechaDevolucion" class="form-label">Fecha Devolución</label>
-            <input type="date"
-                   id="fechaDevolucion"
-                   th:field="*{fechaDevolucion}"
-                   class="form-control">
-        </div>
-
-        <!-- Días de retraso (solo lectura, se calcula) -->
-        <div class="col-12">
-            <label for="diasRetraso" class="form-label">Días de Retraso</label>
-            <input type="number"
-                   id="diasRetraso"
-                   th:field="*{diasRetraso}"
-                   class="form-control"
-                   placeholder="Se calculará al guardar"
-                   readonly>
-        </div>
-
-        <!-- Estado (combobox) -->
-        <div class="col-12">
-            <label for="estado" class="form-label">Estado del Préstamo</label>
-            <select id="estado"
-                    th:field="*{estado}"
-                    class="form-select"
-                    required>
-                <option th:each="e : ${T(ogs.spring.bibliotecaspring.entity.EstadoPrestamo).values()}"
-                        th:value="${e}"
-                        th:text="${e}">
-                </option>
-            </select>
         </div>
 
         <!-- Botones -->

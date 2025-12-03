@@ -42,7 +42,7 @@ public class PrestamoWebController {
 
     @GetMapping("/eliminar")
     public String eliminarPrestamo(Model model) {
-        model.addAttribute("prestamo", new Prestamo());
+        model.addAttribute("prestamos", prestamoRepository.findAll());
         return "eliminar-prestamo";
     }
 
