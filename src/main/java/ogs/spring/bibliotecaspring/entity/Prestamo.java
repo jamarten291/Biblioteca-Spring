@@ -21,6 +21,7 @@ public class Prestamo {
     private LocalDate fechaLimite;
     private LocalDate fechaDevolucion;
     private Integer diasRetraso;
+    @Enumerated(EnumType.STRING)
     private EstadoPrestamo estado;
     // TODO relacionar entidad con Libro y Socio
 
