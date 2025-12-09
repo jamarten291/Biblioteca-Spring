@@ -49,14 +49,14 @@ public class PrestamoWebController {
         return "listado-prestamo";
     }
 
-    @PostMapping()
+    @PostMapping("/add-prestamo")
     public String crearPrestamo(@Valid Prestamo prestamo) {
         // Guarda el préstamo recibido por el modelo
         prestamoRepository.save(prestamo);
         return "redirect:/prestamos/listar";
     }
 
-    @DeleteMapping()
+    @DeleteMapping("/delete-prestamo")
     public String borrarPrestamoByParam(@RequestParam("prestamoId") Long id) {
         prestamoRepository.deleteById(id);
         return "redirect:/prestamos/listar";
