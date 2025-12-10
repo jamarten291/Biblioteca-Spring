@@ -59,9 +59,18 @@ public class PrestamoService {
 
     public Prestamo devolverPrestamo(Long id) {
         Prestamo prestamo = prestamoRepository.findById(id).orElseThrow();
-        LocalDate fechaActual = LocalDate.now();
 
-        prestamo.setFechaDevolucion(fechaActual);
+        prestamo.setFechaDevolucion(LocalDate.now());
+        calcularFechasYPenalizaciones(prestamo);
+
+        return prestamo;
+    }
+
+    public void comprobarReglasPrestamo(Prestamo prestamo) {
+
+    }
+
+    public void calcularFechasYPenalizaciones(Prestamo prestamo) {
         long diff = Duration.between(
                 prestamo.getFechaDevolucion(),
                 prestamo.getFechaLimite()
@@ -77,18 +86,8 @@ public class PrestamoService {
 
             Socio socioAsociado = prestamo.getSocio();
             socioAsociado.setEstado(EstadoSocio.SANCIONADO);
-            socioAsociado.setFechaFinPenalizacion(fechaActual.plusDays(penalizacion));
+            socioAsociado.setFechaFinPenalizacion(LocalDate.now().plusDays(penalizacion));
         }
-
-        return prestamo;
-    }
-
-    public void comprobarReglasPrestamo(Prestamo prestamo) {
-
-    }
-
-    public void calcularFechasYPenalizaciones(Prestamo prestamo) {
-
     }
 
     public List<Prestamo> listarPrestamos() {
