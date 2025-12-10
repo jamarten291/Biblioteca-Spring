@@ -9,8 +9,8 @@ import ogs.spring.bibliotecaspring.repository.PrestamoRepository;
 import ogs.spring.bibliotecaspring.repository.SocioRepository;
 import org.springframework.stereotype.Service;
 
-import java.time.Duration;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 @Service
@@ -28,31 +28,13 @@ public class PrestamoService {
     }
 
     public Prestamo crearPrestamo(Long socioId, Long libroId) {
-        Socio socioAsociado = socioRepository.findById(socioId).orElseThrow();
-        Libro libroAsociado = libroRepository.findById(libroId).orElseThrow();
         Prestamo p = new Prestamo();
 
-        if (socioAsociado.getEstado().equals(EstadoSocio.SANCIONADO)) {
-            long diffDiasSancion = Duration.between(
-                    LocalDate.now(),
-                    socioAsociado.getFechaFinPenalizacion()
-            ).toDays();
-
-            // Si la diferencia de dias es negativa significa que ya ha pasado su periodo de penalización
-            if (diffDiasSancion < 0) {
-                socioAsociado.setEstado(EstadoSocio.ACTIVO);
-            }
-        }
-
-        // Si aún no se ha pasado su periodo de penalización, no entra a este if
-        if (socioAsociado.getNumPrestamos() < 3 &&
-                !socioAsociado.getEstado().equals(EstadoSocio.SANCIONADO)) {
-            p.setSocio(socioAsociado);
-            p.setLibro(libroAsociado);
-
-            LocalDate fechaLimite = p.getFechaPrestamo().plusDays(2);
-            p.setFechaLimite(fechaLimite);
-        }
+        Socio socioAsociado = socioRepository.findById(socioId).orElseThrow();
+        Libro libroAsociado = libroRepository.findById(libroId).orElseThrow();
+        p.setSocio(socioAsociado);
+        p.setLibro(libroAsociado);
+        comprobarReglasPrestamo(p);
 
         return prestamoRepository.save(p);
     }
@@ -63,26 +45,49 @@ public class PrestamoService {
         prestamo.setFechaDevolucion(LocalDate.now());
         calcularFechasYPenalizaciones(prestamo);
 
-        return prestamo;
+        return prestamoRepository.save(prestamo);
     }
 
     public void comprobarReglasPrestamo(Prestamo prestamo) {
+        Socio socioAsociado = prestamo.getSocio();
 
+        if (socioAsociado.getEstado().equals(EstadoSocio.SANCIONADO)) {
+            long diffDiasSancion = ChronoUnit.DAYS.between(
+                    LocalDate.now(),
+                    socioAsociado.getFechaFinPenalizacion()
+            );
+
+            // Si la diferencia de dias es negativa significa que ya ha pasado su periodo de penalización
+            if (diffDiasSancion < 0) {
+                socioAsociado.setEstado(EstadoSocio.ACTIVO);
+            }
+        }
+
+        // Si aún no se ha pasado su periodo de penalización, no entra a este if
+        if (socioAsociado.getNumPrestamosActivos() < 3 &&
+                !socioAsociado.getEstado().equals(EstadoSocio.SANCIONADO)) {
+            LocalDate fechaLimite = prestamo.getFechaPrestamo().plusDays(2);
+            prestamo.setFechaLimite(fechaLimite);
+        } else {
+            prestamo.setSocio(null);
+        }
     }
 
     public void calcularFechasYPenalizaciones(Prestamo prestamo) {
-        long diff = Duration.between(
+        long diff = ChronoUnit.DAYS.between(
                 prestamo.getFechaDevolucion(),
                 prestamo.getFechaLimite()
-        ).toDays();
+        );
 
         // Si la diferencia de días es positiva o cero, la entrega ha sido a tiempo
         if (diff >= 0) {
             prestamo.setEstado(Prestamo.EstadoPrestamo.DEVUELTO);
         } else {
             // Convierto la diferencia a positivo y multiplico por dos para calcular la penalización
-            long penalizacion = Math.abs(diff) * 2;
+            long diasRetraso = Math.abs(diff);
+            long penalizacion = diasRetraso * 2;
             prestamo.setEstado(Prestamo.EstadoPrestamo.ATRASADO);
+            prestamo.setDiasRetraso(Math.toIntExact(diasRetraso));
 
             Socio socioAsociado = prestamo.getSocio();
             socioAsociado.setEstado(EstadoSocio.SANCIONADO);

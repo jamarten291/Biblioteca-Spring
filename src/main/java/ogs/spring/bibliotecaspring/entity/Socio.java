@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 public class Socio {
@@ -89,7 +90,14 @@ public class Socio {
         return prestamos;
     }
 
-    public int getNumPrestamos() { return prestamos.size(); }
+    public int getNumPrestamosActivos() {
+        int cont = 0;
+        for (Prestamo p : prestamos) {
+            if (p.getEstado().equals(Prestamo.EstadoPrestamo.ACTIVO)) cont++;
+        }
+
+        return cont;
+    }
 
     public void setPrestamos(List<Prestamo> prestamos) {
         this.prestamos = prestamos;

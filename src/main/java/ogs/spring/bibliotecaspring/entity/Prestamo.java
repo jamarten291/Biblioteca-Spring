@@ -47,10 +47,6 @@ public class Prestamo {
         return fechaPrestamo;
     }
 
-    public void setFechaPrestamo(LocalDate fechaPrestamo) {
-        this.fechaPrestamo = fechaPrestamo;
-    }
-
     public LocalDate getFechaLimite() {
         return fechaLimite;
     }
