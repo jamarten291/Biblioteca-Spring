@@ -13,27 +13,24 @@
 <div class="container py-5">
     <h1 class="mb-4">Baja de Préstamo</h1>
 
-    <form th:action="@{/prestamos/delete-prestamo}" class="row g-3">
-        <!-- Campo oculto que indica el verbo real -->
-        <input type="hidden" name="_method" value="delete"/>
+    <form action="#" th:action="@{/delete-prestamo}" method="post" class="row g-3" novalidate>
+        <input type="hidden" name="_method" value="DELETE">
 
-        <!-- ID del préstamo -->
+        <!-- Campo de ID numérico -->
         <div class="col-md-6">
-            <label for="prestamoId" class="form-label">Listado de préstamos disponibles</label>
-            <select id="prestamoId"
-                    th:field="*{prestamos}"
-                    class="form-select"
-                    required>
-                <option th:each="prestamo : ${prestamos}"
-                        th:value="${prestamo}"
-                        th:text="'Id - ' + ${prestamo.getPrestamoId()}">
-                </option>
-            </select>
+            <label for="prestamoId" class="form-label">ID del préstamo</label>
+            <input id="prestamoId"
+                   name="prestamoId"
+                   type="number"
+                   class="form-control"
+                   placeholder="Introduce el ID del préstamo"
+                   min="1"
+                   required>
         </div>
 
         <!-- Botones -->
         <div class="col-12 d-flex justify-content-between mt-3">
-            <a th:href="@{/prestamos/menu}" class="btn btn-secondary">Cancelar</a>
+            <a th:href="@{/menu}" class="btn btn-secondary">Cancelar</a>
             <button type="submit" class="btn btn-danger">Dar de Baja</button>
         </div>
     </form>
