@@ -89,6 +89,8 @@ public class Socio {
         return prestamos;
     }
 
+    public int getNumPrestamos() { return prestamos.size(); }
+
     public void setPrestamos(List<Prestamo> prestamos) {
         this.prestamos = prestamos;
     }
