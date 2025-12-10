@@ -47,8 +47,7 @@ public class PrestamoWebController {
     }
 
     @PostMapping("/add-prestamo")
-    public String crearPrestamo(@Valid Prestamo prestamo,
-                                @RequestParam("socioId") Long socio,
+    public String crearPrestamo(@RequestParam("socioId") Long socio,
                                 @RequestParam("libroId") Long libro) {
         prestamoService.crearPrestamo(socio, libro);
         return "redirect:/listar-prestamo";

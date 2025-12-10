@@ -1,9 +1,11 @@
 package ogs.spring.bibliotecaspring.service;
 
+import jakarta.persistence.EntityNotFoundException;
 import ogs.spring.bibliotecaspring.entity.EstadoSocio;
 import ogs.spring.bibliotecaspring.entity.Libro;
 import ogs.spring.bibliotecaspring.entity.Prestamo;
 import ogs.spring.bibliotecaspring.entity.Socio;
+import ogs.spring.bibliotecaspring.exception.LoanNotAllowedException;
 import ogs.spring.bibliotecaspring.repository.LibroRepository;
 import ogs.spring.bibliotecaspring.repository.PrestamoRepository;
 import ogs.spring.bibliotecaspring.repository.SocioRepository;
@@ -30,8 +32,10 @@ public class PrestamoService {
     public Prestamo crearPrestamo(Long socioId, Long libroId) {
         Prestamo p = new Prestamo();
 
-        Socio socioAsociado = socioRepository.findById(socioId).orElseThrow();
-        Libro libroAsociado = libroRepository.findById(libroId).orElseThrow();
+        Socio socioAsociado = socioRepository.findById(socioId)
+                .orElseThrow(() -> new EntityNotFoundException("No se pudo encontrar el socio."));
+        Libro libroAsociado = libroRepository.findById(libroId)
+                .orElseThrow(() -> new EntityNotFoundException("No se pudo encontrar el libro."));
         p.setSocio(socioAsociado);
         p.setLibro(libroAsociado);
         comprobarReglasPrestamo(p);
@@ -40,7 +44,8 @@ public class PrestamoService {
     }
 
     public Prestamo devolverPrestamo(Long id) {
-        Prestamo prestamo = prestamoRepository.findById(id).orElseThrow();
+        Prestamo prestamo = prestamoRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("No se pudo encontrar el préstamo"));
 
         prestamo.setFechaDevolucion(LocalDate.now());
         calcularFechasYPenalizaciones(prestamo);
@@ -69,7 +74,7 @@ public class PrestamoService {
             LocalDate fechaLimite = prestamo.getFechaPrestamo().plusDays(2);
             prestamo.setFechaLimite(fechaLimite);
         } else {
-            prestamo.setSocio(null);
+            throw new LoanNotAllowedException();
         }
     }
 
