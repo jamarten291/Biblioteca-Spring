@@ -3,6 +3,7 @@ package ogs.spring.bibliotecaspring.controller;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import ogs.spring.bibliotecaspring.entity.Socio;
+import ogs.spring.bibliotecaspring.exception.ConcurrencyConflictException;
 import ogs.spring.bibliotecaspring.repository.SocioRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +24,10 @@ public class SocioRestController {
     // CREATE
     @PostMapping("/socios")
     public ResponseEntity<Socio> crearSocio(@Valid @RequestBody Socio socio) {
+        if (socioRepository.existsById(socio.getSocioId())) {
+            throw new ConcurrencyConflictException("Ya existe un socio con el id: " + socio.getSocioId());
+        }
+
         Socio creado = socioRepository.save(socio);
         return ResponseEntity.status(HttpStatus.CREATED).body(creado);
     }

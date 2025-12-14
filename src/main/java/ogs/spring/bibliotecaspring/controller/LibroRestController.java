@@ -3,6 +3,7 @@ package ogs.spring.bibliotecaspring.controller;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import ogs.spring.bibliotecaspring.entity.Libro;
+import ogs.spring.bibliotecaspring.exception.ConcurrencyConflictException;
 import ogs.spring.bibliotecaspring.repository.LibroRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +24,10 @@ public class LibroRestController {
     // CREATE
     @PostMapping("/libros")
     public ResponseEntity<Libro> crearLibro(@Valid @RequestBody Libro libro) {
+        if (libroRepository.existsById(libro.getLibroId())) {
+            throw new ConcurrencyConflictException("Ya existe un libro con el id: " + libro.getLibroId());
+        }
+
         Libro creado = libroRepository.save(libro);
         return ResponseEntity.status(HttpStatus.CREATED).body(creado);
     }
