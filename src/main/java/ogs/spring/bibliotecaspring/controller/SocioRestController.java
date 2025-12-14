@@ -4,6 +4,7 @@ import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import ogs.spring.bibliotecaspring.entity.Socio;
 import ogs.spring.bibliotecaspring.repository.SocioRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,7 +24,7 @@ public class SocioRestController {
     @PostMapping("/socios")
     public ResponseEntity<Socio> crearSocio(@Valid @RequestBody Socio socio) {
         Socio creado = socioRepository.save(socio);
-        return ResponseEntity.ok(creado);
+        return ResponseEntity.status(HttpStatus.CREATED).body(creado);
     }
 
     // READ ALL

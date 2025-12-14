@@ -4,6 +4,7 @@ import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import ogs.spring.bibliotecaspring.entity.Prestamo;
 import ogs.spring.bibliotecaspring.repository.PrestamoRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,7 +26,7 @@ public class PrestamoRestController {
     public ResponseEntity<Prestamo> crearPrestamo(@Valid @RequestBody Prestamo prestamo) {
         // El constructor de Prestamo ya inicializa fechaPrestamo, estado y diasRetraso
         Prestamo creado = prestamoRepository.save(prestamo);
-        return ResponseEntity.ok(creado);
+        return ResponseEntity.status(HttpStatus.CREATED).body(creado);
     }
 
     // ── READ ALL ──────────────────────────────────────────────────────

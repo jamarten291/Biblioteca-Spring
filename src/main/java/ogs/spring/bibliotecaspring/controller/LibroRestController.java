@@ -4,6 +4,7 @@ import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import ogs.spring.bibliotecaspring.entity.Libro;
 import ogs.spring.bibliotecaspring.repository.LibroRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,7 +24,7 @@ public class LibroRestController {
     @PostMapping("/libros")
     public ResponseEntity<Libro> crearLibro(@Valid @RequestBody Libro libro) {
         Libro creado = libroRepository.save(libro);
-        return ResponseEntity.ok(creado);
+        return ResponseEntity.status(HttpStatus.CREATED).body(creado);
     }
 
     // READ ALL
