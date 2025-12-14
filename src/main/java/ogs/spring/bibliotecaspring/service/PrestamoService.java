@@ -103,4 +103,24 @@ public class PrestamoService {
     public List<Prestamo> listarPrestamos() {
         return prestamoRepository.findAll();
     }
+
+    public Prestamo obtenerPrestamoPorId(Long id) {
+        return prestamoRepository.findById(id)
+                .orElseThrow(() ->
+                        new EntityNotFoundException("No se pudo encontrar el préstamo con ID: " + id));
+    }
+
+    public void eliminarPrestamo(Long id) {
+        Prestamo prestamo = prestamoRepository.findById(id)
+                .orElseThrow(() ->
+                        new EntityNotFoundException("No se pudo encontrar el préstamo con ID: " + id));
+
+        // Regla opcional: solo permitir eliminar préstamos devueltos
+        if (prestamo.getEstado() == Prestamo.EstadoPrestamo.ACTIVO) {
+            throw new IllegalStateException("No se puede eliminar un préstamo activo");
+        }
+
+        prestamoRepository.delete(prestamo);
+    }
+
 }

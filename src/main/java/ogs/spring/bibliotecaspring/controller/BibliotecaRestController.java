@@ -1,7 +1,11 @@
 package ogs.spring.bibliotecaspring.controller;
 
+import jakarta.validation.Valid;
 import ogs.spring.bibliotecaspring.entity.Prestamo;
+import ogs.spring.bibliotecaspring.repository.LibroRepository;
 import ogs.spring.bibliotecaspring.repository.PrestamoRepository;
+import ogs.spring.bibliotecaspring.repository.SocioRepository;
+import ogs.spring.bibliotecaspring.service.PrestamoService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,25 +15,36 @@ import java.util.Optional;
 @RequestMapping("/api")
 public class BibliotecaRestController {
 
+    private final PrestamoService prestamoService;
+    private final SocioRepository socioRepository;
+    private final LibroRepository libroRepository;
 
-    private final PrestamoRepository prestamoRepository;
+    public BibliotecaRestController(PrestamoService prestamoService,
+                                    SocioRepository socioRepository,
+                                    LibroRepository libroRepository) {
+        this.prestamoService = prestamoService;
+        this.socioRepository = socioRepository;
+        this.libroRepository = libroRepository;
+    }
 
-    public BibliotecaRestController(PrestamoRepository prestamoRepository) {
-        this.prestamoRepository = prestamoRepository;
+    @PostMapping("/prestamos")
+    public ResponseEntity<Prestamo> crearPrestamo(@Valid @RequestBody CrearPrestamoDTO dto) {
+        Prestamo created = prestamoService.crearPrestamo(
+                dto.getSocioId(),
+                dto.getLibroId()
+        );
+        return ResponseEntity.ok(created);
     }
 
     @DeleteMapping("/prestamos/{id}")
     public ResponseEntity<Void> eliminarPrestamo(@PathVariable Long id) {
-        prestamoRepository.deleteById(id);
+        prestamoService.eliminarPrestamo(id);
         return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/prestamos/{id}")
-    public ResponseEntity<Prestamo> obtenerPrestamo(@PathVariable Long id) {
-        // Optional es un contenedor que puede o no contener un valor nulo
-        Optional<Prestamo> prestamo = prestamoRepository.findById(id);
-
-        // Si el valor del optional es nulo, significa que no existe el prestamo
-        return prestamo.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<Prestamo> recibirPrestamo(@PathVariable Long id) {
+        Prestamo p = prestamoService.obtenerPrestamoPorId(id);
+        return ResponseEntity.ok(p);
     }
 }
