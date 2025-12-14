@@ -6,9 +6,6 @@ import java.time.LocalDate;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
-import org.hibernate.validator.constraints.Range;
-
-import java.time.LocalDate;
 
 @Entity
 public class Prestamo {
