@@ -1,5 +1,6 @@
 package ogs.spring.bibliotecaspring.service;
 
+import jakarta.persistence.EntityNotFoundException;
 import ogs.spring.bibliotecaspring.entity.Libro;
 import ogs.spring.bibliotecaspring.repository.LibroRepository;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,10 @@ public class LibroService {
     }
 
     public void eliminarLibro(Long id) {
+        Libro l = libroRepository.findById(id)
+                    .orElseThrow(() ->
+                            new EntityNotFoundException("Libro no encontrado con id: " + id)
+                    );
         libroRepository.deleteById(id);
     }
 }

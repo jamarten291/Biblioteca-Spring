@@ -12,15 +12,15 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping()
-public class PrestamoWebController {
+public class BibliotecaWebController {
 
     private final LibroService libroService;
     private final SocioService socioService;
     private final PrestamoService prestamoService;
 
-    public PrestamoWebController(LibroService libroService,
-                                 SocioService socioService,
-                                 PrestamoService prestamoService) {
+    public BibliotecaWebController(LibroService libroService,
+                                   SocioService socioService,
+                                   PrestamoService prestamoService) {
         this.libroService = libroService;
         this.socioService = socioService;
         this.prestamoService = prestamoService;

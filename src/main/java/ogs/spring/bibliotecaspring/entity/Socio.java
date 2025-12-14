@@ -5,11 +5,16 @@ import jakarta.persistence.*;
 
 import java.time.LocalDate;
 import java.util.List;
-import jakarta.persistence.*;
+
 import jakarta.validation.constraints.*;
 
 @Entity
 public class Socio {
+
+    public enum EstadoSocio {
+        ACTIVO,
+        SANCIONADO
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

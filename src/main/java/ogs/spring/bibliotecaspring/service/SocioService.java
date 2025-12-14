@@ -1,5 +1,6 @@
 package ogs.spring.bibliotecaspring.service;
 
+import jakarta.persistence.EntityNotFoundException;
 import ogs.spring.bibliotecaspring.entity.Socio;
 import ogs.spring.bibliotecaspring.repository.SocioRepository;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,8 @@ public class SocioService {
     }
 
     public void eliminar(Long id) {
+        Socio s = socioRepository.findById(id)
+                    .orElseThrow(() -> new EntityNotFoundException("Socio no encontrado con id: " + id));
         socioRepository.deleteById(id);
     }
 }

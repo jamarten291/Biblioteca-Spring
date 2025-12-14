@@ -1,5 +1,6 @@
 package ogs.spring.bibliotecaspring.exception;
 
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -12,6 +13,11 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(LoanNotAllowedException.class)
     public ResponseEntity<String> handleLoanNotAllowed(LoanNotAllowedException ex) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(EntityNotFoundException.class)
+    public ResponseEntity<String> handleEntityNotFoundException(EntityNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
     }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)

@@ -1,7 +1,6 @@
 package ogs.spring.bibliotecaspring.service;
 
 import jakarta.persistence.EntityNotFoundException;
-import ogs.spring.bibliotecaspring.entity.EstadoSocio;
 import ogs.spring.bibliotecaspring.entity.Libro;
 import ogs.spring.bibliotecaspring.entity.Prestamo;
 import ogs.spring.bibliotecaspring.entity.Socio;
@@ -56,7 +55,7 @@ public class PrestamoService {
     public void comprobarReglasPrestamo(Prestamo prestamo) {
         Socio socioAsociado = prestamo.getSocio();
 
-        if (socioAsociado.getEstado().equals(EstadoSocio.SANCIONADO)) {
+        if (socioAsociado.getEstado().equals(Socio.EstadoSocio.SANCIONADO)) {
             long diffDiasSancion = ChronoUnit.DAYS.between(
                     LocalDate.now(),
                     socioAsociado.getFechaFinPenalizacion()
@@ -64,13 +63,13 @@ public class PrestamoService {
 
             // Si la diferencia de dias es negativa significa que ya ha pasado su periodo de penalización
             if (diffDiasSancion < 0) {
-                socioAsociado.setEstado(EstadoSocio.ACTIVO);
+                socioAsociado.setEstado(Socio.EstadoSocio.ACTIVO);
             }
         }
 
         // Si aún no se ha pasado su periodo de penalización, no entra a este if
         if (socioAsociado.getNumPrestamosActivos() < 3 &&
-                !socioAsociado.getEstado().equals(EstadoSocio.SANCIONADO)) {
+                !socioAsociado.getEstado().equals(Socio.EstadoSocio.SANCIONADO)) {
             LocalDate fechaLimite = prestamo.getFechaPrestamo().plusDays(2);
             prestamo.setFechaLimite(fechaLimite);
         } else {
@@ -95,7 +94,7 @@ public class PrestamoService {
             prestamo.setDiasRetraso(Math.toIntExact(diasRetraso));
 
             Socio socioAsociado = prestamo.getSocio();
-            socioAsociado.setEstado(EstadoSocio.SANCIONADO);
+            socioAsociado.setEstado(Socio.EstadoSocio.SANCIONADO);
             socioAsociado.setFechaFinPenalizacion(LocalDate.now().plusDays(penalizacion));
         }
     }
