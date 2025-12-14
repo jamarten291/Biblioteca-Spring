@@ -122,4 +122,7 @@ public class PrestamoService {
         prestamoRepository.delete(prestamo);
     }
 
+    public List<Prestamo> findByEstado(Prestamo.EstadoPrestamo estado) {
+        return prestamoRepository.findByEstado(estado);
+    }
 }

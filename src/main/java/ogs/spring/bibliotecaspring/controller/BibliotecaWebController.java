@@ -85,6 +85,12 @@ public class BibliotecaWebController {
         return "listado_libro";
     }
 
+    @GetMapping("/listar-libro-stats")
+    public String listadoLibroPorPrestados(Model model) {
+        model.addAttribute("libros", libroService.getLibrosMasPrestados());
+        return "listado_libro";
+    }
+
     @GetMapping("/listar-socio")
     public String listadoSocio(Model model) {
         model.addAttribute("socios", socioService.listarSocios());

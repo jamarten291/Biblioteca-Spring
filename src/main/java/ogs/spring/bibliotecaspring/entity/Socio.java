@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 import jakarta.validation.constraints.*;
@@ -128,6 +129,13 @@ public class Socio {
 
     public void setPrestamos(List<Prestamo> prestamos) {
         this.prestamos = prestamos;
+    }
+
+    public int getEdad() {
+        return Math.toIntExact(ChronoUnit.YEARS.between(
+                this.fechaNacimiento,
+                LocalDate.now()
+        ));
     }
 
     public int getNumPrestamosActivos() {

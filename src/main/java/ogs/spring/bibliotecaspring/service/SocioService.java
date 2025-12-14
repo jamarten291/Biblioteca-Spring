@@ -5,6 +5,7 @@ import ogs.spring.bibliotecaspring.entity.Socio;
 import ogs.spring.bibliotecaspring.repository.SocioRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -27,5 +28,21 @@ public class SocioService {
         Socio s = socioRepository.findById(id)
                     .orElseThrow(() -> new EntityNotFoundException("Socio no encontrado con id: " + id));
         socioRepository.deleteById(id);
+    }
+
+    public List<Socio> findByNombre(String keyword) {
+        return socioRepository.findByNombreContaining(keyword);
+    }
+
+    public List<Socio> findByRangoEdad(int after, int before) {
+        List<Socio> resultado = new ArrayList<>();
+
+        for (Socio s : socioRepository.findAll()) {
+            if (s.getEdad() > after && s.getEdad() < before) {
+                resultado.add(s);
+            }
+        }
+
+        return resultado;
     }
 }

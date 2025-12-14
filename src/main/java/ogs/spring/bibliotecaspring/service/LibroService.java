@@ -5,6 +5,7 @@ import ogs.spring.bibliotecaspring.entity.Libro;
 import ogs.spring.bibliotecaspring.repository.LibroRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -29,5 +30,16 @@ public class LibroService {
                             new EntityNotFoundException("Libro no encontrado con id: " + id)
                     );
         libroRepository.deleteById(id);
+    }
+
+    public List<Libro> searchByTitle(String keyword) {
+        return libroRepository.findByTituloContaining(keyword);
+    }
+
+    public List<Libro> getLibrosMasPrestados() {
+        return libroRepository.findAll()
+                .stream()
+                .sorted(Comparator.comparingInt(l -> l.getPrestamos().size()))
+                .toList();
     }
 }
