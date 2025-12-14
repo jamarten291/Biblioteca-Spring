@@ -5,10 +5,7 @@ import jakarta.persistence.*;
 
 import java.util.List;
 
-import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import java.util.List;
 
 @Entity
 public class Libro {
