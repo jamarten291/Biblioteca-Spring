@@ -24,6 +24,8 @@ public class Socio {
     private List<Prestamo> prestamos;
 
     public Socio() {
+        this.estado = EstadoSocio.ACTIVO;
+        this.fechaAlta = LocalDate.now();
     }
 
     public Long getSocioId() {

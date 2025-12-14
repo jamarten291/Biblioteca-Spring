@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Dar de Baja un Libro</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          crossorigin="anonymous">
+</head>
+<body class="bg-light">
+
+<div class="container py-5">
+    <h1 class="mb-4">Baja de Libro</h1>
+
+    <form action="#"
+          th:action="@{/delete-libro}"
+          method="post"
+          class="row g-3"
+          novalidate>
+
+        <input type="hidden" name="_method" value="DELETE">
+
+        <!-- Campo de ID -->
+        <div class="col-md-6">
+            <label for="libroId" class="form-label">ID del libro</label>
+            <input id="libroId"
+                   name="libroId"
+                   type="number"
+                   class="form-control"
+                   placeholder="Introduce el ID del libro"
+                   min="1"
+                   required>
+        </div>
+
+        <!-- Botones -->
+        <div class="col-12 d-flex justify-content-between mt-3">
+            <a th:href="@{/gestion-libro}" class="btn btn-secondary">Cancelar</a>
+            <button type="submit" class="btn btn-danger">Dar de Baja</button>
+        </div>
+    </form>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        crossorigin="anonymous"></script>
+</body>
+</html>
